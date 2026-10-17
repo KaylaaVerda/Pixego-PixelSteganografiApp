@@ -1,157 +1,166 @@
-# Pixego
+<div align="center">
 
-## Coba Aplikasinya
+# 🔐 Pixego
 
-[![Buka Aplikasi](https://img.shields.io/badge/Buka%20Aplikasi-Streamlit-FF4B4B?logo=streamlit&logoColor=white)](ISI_LINK_STREAMLIT_DI_SINI)
+### Sembunyikan pesan rahasia di dalam gambar, cukup dengan satu password.
 
-Klik tombol di atas untuk membuka Pixego langsung di browser, tanpa instalasi.
+**[🚀 Coba Pixego Sekarang](ISI_LINK_STREAMLIT_DI_SINI)**
 
-![Python](https://img.shields.io/badge/python-3.10%2B-blue)
-![License](https://img.shields.io/badge/license-MIT-green)
+</div>
 
-Pixego adalah aplikasi steganografi untuk menyembunyikan pesan rahasia di dalam gambar PNG. Pesan dienkripsi dengan AES-256-GCM (kunci dari Argon2id), lalu disisipkan memakai LSB sekuensial atau acak berbasis kunci. Dilengkapi pengukuran MSE dan PSNR, uji chi-square, notebook Jupyter, CLI, dan unit test.
+---
 
-Nama Pixego berasal dari kata *pixel* dan *stego*.
+## ✨ Apa itu Pixego?
 
-## Fitur
+Pernah ingin mengirim pesan rahasia, tetapi tidak mau ada orang yang tahu bahwa kamu sedang mengirim pesan rahasia? Pixego dibuat untuk situasi itu.
 
-- Enkripsi AES-256-GCM, kunci diturunkan dari password lewat Argon2id dan HKDF-SHA256
-- Dua mode penyisipan: sekuensial dan acak berbasis kunci, dengan 1 sampai 3 bit per kanal
-- Deteksi password salah atau gambar yang diubah lewat tag autentikasi GCM
-- Pengukuran kualitas citra: MSE dan PSNR
-- Steganalisis chi-square (seluruh gambar dan progresif)
-- Pemuatan cover yang aman: rotasi EXIF, transparansi, pengecilan otomatis
-- Notebook Jupyter, CLI, dan 25 unit test
+Pilih sebuah gambar, tulis pesanmu, lalu isi password. Pixego mengenkripsi pesan dengan **AES-256-GCM** dan menyebarkannya ke dalam piksel gambar. Hasilnya tampak seperti gambar biasa, dan hanya bisa dibuka oleh orang yang memegang password yang benar.
 
-## Struktur Folder
+Nama Pixego berasal dari kata *pixel* dan *stego* (steganografi).
 
-```
-pixego/
-  README.md
-  LICENSE
-  requirements.txt
-  .gitignore
-  notebook/
-    pixego.ipynb                 notebook bersih, jalankan sendiri
-    pixego_dengan_output.ipynb   contoh hasil eksekusi (gambar sintetis)
-  src/
-    stego_core.py        inti: kriptografi, embed, extract, MSE, PSNR, chi-square
-    cli.py               antarmuka baris perintah
-    generate_samples.py  pembuat gambar cover contoh
-  tests/
-    test_stego.py        25 unit test
-  sample_images/         dua gambar cover sintetis (tekstur dan polos)
-  hasil_contoh/          CSV hasil eksperimen dari gambar sintetis
-```
+> ⚠️ **Pixego adalah proyek pembelajaran kriptografi, bukan alat keamanan untuk produksi.** Jangan mengandalkannya untuk melindungi data yang benar-benar sensitif.
 
-## Cara Memasang
+## 🎯 Masalah yang Ingin Diselesaikan
 
-Butuh Python 3.10 atau lebih baru.
+Enkripsi biasa menyembunyikan **isi** pesan, tetapi tidak menyembunyikan **keberadaannya**. Data terenkripsi tampak acak dan justru bisa menarik perhatian pihak yang memantau komunikasi.
 
-```
-python -m venv .venv
-source .venv/bin/activate        # Windows: .venv\Scripts\activate
-pip install -r requirements.txt
-```
+Steganografi menyembunyikan keberadaan pesan, tetapi metode LSB yang polos punya kelemahan. Westfeld dan Pfitzmann (2000) menunjukkan bahwa beberapa perangkat steganografi populer dapat dideteksi lewat serangan visual dan statistik, termasuk chi-square attack.
 
-## Cara Menjalankan
+Pixego menggabungkan keduanya dan mengujinya secara terbuka:
 
-**1. Notebook (disarankan untuk belajar dan laporan)**
+- **Enkripsi dulu, baru disisipkan**, sehingga kalaupun ada yang mengekstrak bitnya, isinya tetap tidak terbaca.
+- **Penyisipan acak berbasis kunci**, sehingga letak bit pesan tidak berurutan dan hanya bisa direproduksi oleh pemilik password.
+- **Analisis bawaan** (MSE, PSNR, dan chi-square) agar kamu bisa melihat sendiri seberapa besar gambar berubah dan seberapa mudah ia terdeteksi.
 
-```
-jupyter notebook notebook/pixego.ipynb
-```
+## 🚀 Cara Mencoba
 
-Jalankan sel dari atas ke bawah. Untuk memakai gambarmu sendiri, isi `USER_COVER_PATHS` di bagian 6. Notebook juga bisa diunggah ke Google Colab.
+1. Buka **[aplikasi Pixego](ISI_LINK_STREAMLIT_DI_SINI)**.
+2. Klik **Coba Sekarang** untuk menyembunyikan pesan, atau buka halaman **Ekstrak** untuk mengungkap pesan.
+3. Ikuti langkah di halaman tersebut.
 
-**2. Baris perintah**
+> 💤 Aplikasi gratis di Streamlit bisa tertidur saat lama tidak dipakai. Kalau muncul tombol untuk membangunkannya, klik saja lalu tunggu beberapa saat.
 
-```
-cd src
-python cli.py kapasitas ../sample_images/cover_tekstur.png
-python cli.py embed -i ../sample_images/cover_tekstur.png -o stego.png -m "pesan rahasia"
-python cli.py extract -i stego.png
-python cli.py metrik ../sample_images/cover_tekstur.png stego.png
-python cli.py chi-square stego.png
-```
+### Contoh penggunaan
 
-Contoh dengan foto HP yang besar:
+| Kamu ingin | Lakukan ini |
+|---|---|
+| Menyembunyikan pesan di dalam sebuah foto | Buka **Sembunyikan**, unggah foto, tulis pesan, isi password, lalu unduh hasilnya |
+| Membuka pesan dari gambar yang dikirim temanmu | Buka **Ekstrak**, unggah gambar PNG atau BMP, lalu masukkan password yang sama |
+| Melihat seberapa besar gambar berubah | Buka **Analisis**, lalu lihat nilai MSE, PSNR, dan selisih gambar |
+| Membandingkan mode sekuensial dan acak | Buka **Analisis**, lalu pakai bagian **Bandingkan Mode** |
 
-```
-python cli.py embed -i foto_hp.jpg -o stego.png -m "halo" --max-side 1024 --save-cover cover_kecil.png
-python cli.py metrik cover_kecil.png stego.png
+### Tips memakai Pixego
+
+- Pakai **password yang panjang dan unik**. Keamanan pesan sangat bergantung pada kekuatan password.
+- Kirim gambar hasil sebagai **file atau dokumen**, bukan sebagai foto lewat aplikasi chat. Banyak aplikasi chat mengompres foto sehingga pesan hilang.
+- Jangan **mengubah ukuran, memotong, atau memberi filter** pada gambar hasil.
+- Pakai gambar yang **ramai dan bertekstur**. Gambar dengan area warna polos yang luas lebih mudah dideteksi secara statistik.
+
+## 🧭 Isi Aplikasi
+
+| Halaman | Isinya |
+|---|---|
+| 🏠 **Beranda** | Pengenalan singkat, contoh hasil, dan panduan cara kerja |
+| 🙈 **Sembunyikan** | Unggah gambar, tulis pesan, pilih mode, lalu unduh gambar hasil |
+| 🔓 **Ekstrak** | Unggah gambar hasil Pixego dan ungkap pesan di dalamnya |
+| 📊 **Analisis** | MSE, PSNR, bidang LSB, histogram, dan uji chi-square |
+| ℹ️ **Tentang** | Cara kerja, batasan, referensi, dan pengembang |
+
+## ⚙️ Bagaimana Pixego Bekerja
+
+**Saat menyembunyikan pesan**
+
+```mermaid
+flowchart LR
+    A["Gambar cover, pesan, dan password"] --> B["Argon2id dan HKDF menurunkan kunci"]
+    B --> C["AES-256-GCM mengenkripsi pesan"]
+    C --> D["LSB menyisipkan bit ke piksel"]
+    D --> E["Gambar hasil dalam format PNG"]
 ```
 
-Kalau opsi `-p` tidak diisi, password ditanyakan lewat prompt (lebih aman karena tidak tersimpan di riwayat terminal). Opsi lain: `--mode sequential|random`, `--bits 1|2|3`, `--message-file`, `--max-side`, `--save-cover`, `--tanpa-verifikasi`.
+**Saat mengungkap pesan**
 
-Setelah menyimpan stego image, `embed` otomatis membaca ulang file hasil dan memastikan pesannya bisa diekstrak. Kalau output bukan `.png` atau `.bmp`, perintah ditolak karena format lossy merusak pesan.
-
-**3. Unit test**
-
-```
-python -m unittest discover -s tests -v
-```
-
-## Cara Kerja Singkat
-
-```
-EMBED   : password --Argon2id--> master key --HKDF--> kunci AES + kunci posisi
-          pesan --AES-256-GCM--> ciphertext --LSB (posisi acak)--> stego image (PNG)
-
-EXTRACT : stego image --> baca header --> turunkan kunci lagi --> baca bit di posisi yang sama
-          --> AES-256-GCM decrypt (tag salah = password salah atau gambar diubah)
+```mermaid
+flowchart LR
+    F["Gambar hasil dan password"] --> G["Baca header lalu turunkan kunci"]
+    G --> H["Ambil bit dari posisi yang sama"]
+    H --> I["AES-256-GCM memeriksa tag dan mendekripsi"]
+    I --> J["Pesan asli, atau ditolak jika tidak valid"]
 ```
 
-Header 26 byte ditanam sekuensial (1 bit per kanal) di awal gambar. Isinya magic `STG1`, mode, bit per kanal, salt 16 byte, dan panjang body. Body berisi nonce 12 byte, ciphertext, dan tag GCM 16 byte. Header dipakai sebagai associated data GCM sehingga perubahan pada header ikut terdeteksi.
+1. **Penurunan kunci.** Password diubah menjadi kunci 32 byte dengan **Argon2id** (lambat dan boros memori agar sulit ditebak dengan brute force). **HKDF-SHA256** lalu memecahnya menjadi dua kunci: satu untuk enkripsi dan satu untuk menentukan posisi penyisipan.
+2. **Enkripsi.** Pesan dienkripsi dengan **AES-256-GCM**. Mode ini menghasilkan tag autentikasi sehingga password yang salah atau gambar yang diubah langsung terdeteksi.
+3. **Penyisipan.** Bit terenkripsi ditanam pada bit paling tidak signifikan (LSB) piksel. Pada mode **sekuensial** bit ditanam berurutan. Pada mode **acak** urutan kanal diacak dengan keystream AES-CTR dari kunci posisi.
+4. **Header.** Header 26 byte di awal gambar menyimpan penanda format, mode, jumlah bit per kanal, salt, dan panjang data. Header juga ikut diautentikasi oleh GCM.
+5. **Pengungkapan.** Proses dibalik. Kalau tag GCM tidak cocok, Pixego menolak dan tidak menampilkan apa pun.
 
-## Format Gambar
+### Dibuat dengan prinsip kehati-hatian
 
-**Cover (input)** boleh PNG, JPG, BMP, WebP, dan format lain yang dikenali Pillow. Gambar dibuka lewat `load_cover` yang menangani:
+- 🔒 **Tidak membuat algoritma sendiri.** Semua primitif kriptografi memakai library yang sudah teruji (`cryptography` dan `argon2-cffi`).
+- 🚫 **Tidak mengklaim 100% aman.** Pixego menampilkan batasannya secara terbuka dan menyediakan alat analisis agar kamu bisa menilai sendiri.
+- 🗑️ **Tidak menyimpan datamu.** Gambar, password, dan pesan hanya diproses di memori selama sesi dan tidak disimpan ke disk oleh aplikasi.
+- 🙋 **Jujur saat gagal.** Password salah, gambar yang sudah dikompres, atau gambar tanpa pesan akan dijawab dengan pesan error yang jelas.
+
+> 🛡️ Aplikasi web ini bersifat publik. Jangan mengunggah data yang benar-benar sensitif ke aplikasi ini.
+
+## 🖼️ Format Gambar
+
+**Gambar cover (input)** boleh PNG, JPG, BMP, dan WebP. Pixego menanganinya secara otomatis:
 
 | Kasus | Perlakuan |
 |---|---|
 | Foto HP dengan rotasi EXIF | Rotasi diterapkan agar tidak miring |
 | PNG transparan | Diratakan di atas latar putih |
 | GIF atau PNG palet | Diubah ke RGB, GIF animasi hanya frame pertama |
-| Gambar sangat besar | Bisa diperkecil dengan `--max-side` |
-| HEIC/HEIF atau file rusak | Pesan error yang jelas (konversi ke PNG atau JPG dulu) |
+| Gambar sangat besar | Diperkecil otomatis |
+| HEIC/HEIF atau file rusak | Muncul pesan error yang jelas, konversi ke PNG atau JPG dulu |
 | Metadata (EXIF, profil warna) | Tidak ikut tersimpan di hasil |
 
-**Stego (output)** wajib PNG atau BMP. JPG, WebP, resize, crop, dan filter merusak pesan. Kirim sebagai file atau dokumen, bukan sebagai foto lewat aplikasi chat yang mengompres otomatis.
+**Gambar hasil (output)** selalu **PNG**. Format lossy seperti JPG dan WebP mengubah nilai piksel sehingga pesan hilang.
 
-Mode acak menolak gambar di atas sekitar 8 megapiksel (24 juta kanal) karena boros memori. Perkecil gambar dulu atau pakai mode sequential.
+Mode acak membatasi ukuran gambar sekitar 8 megapiksel karena boros memori. Untuk gambar yang lebih besar, perkecil dulu atau pakai mode sekuensial.
 
-## Catatan Penting
+## 🛠️ Teknologi
 
-1. **Parameter Argon2id** (64 MiB, 3 iterasi, paralelisme 4) perlu dicocokkan dengan RFC 9106 dan OWASP Password Storage Cheat Sheet sebelum dipakai di laporan.
-2. **Folder `hasil_contoh`** berasal dari gambar sintetis. Itu hanya bukti kode berjalan. Untuk laporan, jalankan ulang eksperimen dengan gambar asli.
-3. **Hasil chi-square** hanya menggambarkan satu jenis serangan statistik dan sangat bergantung pada karakter gambar. Jangan menyimpulkan keamanan umum dari hasil ini.
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)
+![NumPy](https://img.shields.io/badge/NumPy-013243?style=for-the-badge&logo=numpy&logoColor=white)
+![Pillow](https://img.shields.io/badge/Pillow-2A6DB0?style=for-the-badge&logo=python&logoColor=white)
+![SciPy](https://img.shields.io/badge/SciPy-8CAAE6?style=for-the-badge&logo=scipy&logoColor=white)
 
-## Keterbatasan
+**Metode:** AES-256-GCM, Argon2id (RFC 9106), HKDF-SHA256, steganografi LSB (sekuensial dan acak berbasis kunci), pengukuran MSE dan PSNR, serta steganalisis chi-square.
 
-- Rapuh terhadap kompresi, resize, crop, dan filter.
+## 📝 Catatan dan Keterbatasan
+
+- Pesan rapuh terhadap kompresi, perubahan ukuran, pemotongan, dan filter gambar.
 - Header tidak disamarkan dan parameter Argon2id tidak disimpan di header.
-- Cover berformat JPG punya karakter statistik hasil kompresi, yang bisa memengaruhi hasil chi-square.
-- Keamanan tetap bergantung pada kekuatan password.
-- Ini kode pembelajaran dan belum diaudit untuk penggunaan produksi.
+- Hasil chi-square hanya menggambarkan **satu jenis** serangan statistik dan sangat bergantung pada karakter gambar. Lolos chi-square tidak berarti aman dari metode steganalisis lain.
+- Data di folder `hasil_contoh` berasal dari gambar sintetis dan hanya bukti bahwa kode berjalan, bukan hasil penelitian.
+- Cover berformat JPG punya karakter statistik hasil kompresi yang dapat memengaruhi hasil chi-square.
+- Parameter Argon2id perlu disesuaikan dengan rekomendasi terbaru (RFC 9106 dan OWASP) sebelum dipakai di luar pembelajaran.
 
-## Referensi
+## 📚 Referensi
 
-- Westfeld, A., & Pfitzmann, A. (2000). Attacks on Steganographic Systems. *Information Hiding (IH 1999)*, LNCS, hlm. 61-76. Springer. DOI: 10.1007/10719724_5
+- Westfeld, A., & Pfitzmann, A. (2000). Attacks on Steganographic Systems. *Information Hiding (IH 1999)*, LNCS, hlm. 61-76. Springer. DOI: [10.1007/10719724_5](https://doi.org/10.1007/10719724_5)
 - Böhme, R., & Westfeld, A. (2004). Exploiting Preserved Statistics for Steganalysis. *Information Hiding (IH 2004)*, hlm. 82-96. Springer.
-- RFC 9106 (2021). Argon2 Memory-Hard Function for Password Hashing and Proof-of-Work Applications. https://www.rfc-editor.org/rfc/rfc9106
-- NIST SP 800-38D (AES-GCM) dan RFC 5869 (HKDF): cek langsung ke situs resminya sebelum dikutip.
+- RFC 9106 (2021). [Argon2 Memory-Hard Function for Password Hashing and Proof-of-Work Applications](https://www.rfc-editor.org/rfc/rfc9106).
+- RFC 5869. HMAC-based Extract-and-Expand Key Derivation Function (HKDF).
+- NIST SP 800-38D. Recommendation for Block Cipher Modes of Operation: Galois/Counter Mode (GCM) and GMAC.
 
-## Pengembang
+## 👩‍💻 Penulis
 
-| | |
-|---|---|
-| Nama | Kayla Verda Fawnia Heses |
-| NIM | A11.2024.15689 |
-| Mata Kuliah | Kriptografi |
+**Kayla Verda Fawnia Heses**
+NIM: A11.2024.15689
+Proyek mata kuliah **Kriptografi**
 
-Aplikasi ini dibuat untuk memenuhi proyek mata kuliah Kriptografi.
+## 📄 Lisensi
 
-## Lisensi
+MIT. Lihat file [LICENSE](LICENSE).
 
-MIT. Lihat file `LICENSE`.
+---
+
+<div align="center">
+
+*Pixego adalah proyek pembelajaran kriptografi, bukan alat keamanan untuk produksi.*
+
+</div>
