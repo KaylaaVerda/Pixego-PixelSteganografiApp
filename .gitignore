@@ -9,7 +9,6 @@ __pycache__/
 
 # Keluaran yang dibuat saat menjalankan notebook atau CLI
 notebook/stego_demo.png
-notebook/hasil_*.csv
 src/stego.png
 src/cover_kecil.png
 
