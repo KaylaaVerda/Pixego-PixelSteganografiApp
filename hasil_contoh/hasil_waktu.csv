@@ -1,9 +1,0 @@
-pesan_byte,mode,waktu_embed_s,waktu_extract_s
-100,sequential,0.23,0.244
-100,random,0.38,0.362
-1024,sequential,0.208,0.215
-1024,random,0.325,0.304
-10240,sequential,0.252,0.241
-10240,random,0.337,0.31
-51200,sequential,0.206,0.205
-51200,random,0.319,0.349
