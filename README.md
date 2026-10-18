@@ -4,7 +4,7 @@
 
 ### Sembunyikan pesan rahasia di dalam gambar, cukup dengan satu password.
 
-**[🚀 Coba Pixego Sekarang](ISI_LINK_STREAMLIT_DI_SINI)**
+**[🚀 Coba Pixego Sekarang](https://pixego.streamlit.app/)**
 
 </div>
 
@@ -34,7 +34,7 @@ Pixego menggabungkan keduanya dan mengujinya secara terbuka:
 
 ## 🚀 Cara Mencoba
 
-1. Buka **[aplikasi Pixego](ISI_LINK_STREAMLIT_DI_SINI)**.
+1. Buka **[aplikasi Pixego](https://pixego.streamlit.app/)**.
 2. Klik **Coba Sekarang** untuk menyembunyikan pesan, atau buka halaman **Ekstrak** untuk mengungkap pesan.
 3. Ikuti langkah di halaman tersebut.
 
@@ -147,10 +147,10 @@ Mode acak membatasi ukuran gambar sekitar 8 megapiksel karena boros memori. Untu
 - RFC 5869. HMAC-based Extract-and-Expand Key Derivation Function (HKDF).
 - NIST SP 800-38D. Recommendation for Block Cipher Modes of Operation: Galois/Counter Mode (GCM) and GMAC.
 
-## 👩‍💻 Penulis
+## 👩‍💻 Pengembang
 
-**Kayla Verda Fawnia Heses**
-NIM: A11.2024.15689
+- Nama : Kayla Verda Fawnia Heses
+- NIM  : A11.2024.15689
 Proyek mata kuliah **Kriptografi**
 
 ## 📄 Lisensi
