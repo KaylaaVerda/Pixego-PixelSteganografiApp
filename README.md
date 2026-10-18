@@ -151,7 +151,7 @@ Mode acak membatasi ukuran gambar sekitar 8 megapiksel karena boros memori. Untu
 
 - Nama : Kayla Verda Fawnia Heses
 - NIM  : A11.2024.15689
-Proyek mata kuliah **Kriptografi**
+- Proyek mata kuliah **Kriptografi**
 
 ## 📄 Lisensi
 
