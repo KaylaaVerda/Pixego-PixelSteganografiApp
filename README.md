@@ -1,12 +1,10 @@
-<div align="center">
+# Pixego
 
-# 🔐 Pixego
+## Coba Aplikasinya
+[![Buka Aplikasi](https://img.shields.io/badge/Buka%20Aplikasi-Streamlit-FF4B4B?logo=streamlit&logoColor=white)](ISI_LINK_STREAMLIT_DI_SINI)
+Klik tombol di atas untuk membuka Pixego langsung di browser, tanpa instalasi.
 
 ### Sembunyikan pesan rahasia di dalam gambar, cukup dengan satu password.
-
-**[🚀 Coba Pixego Sekarang](ISI_LINK_STREAMLIT_DI_SINI)**
-
-</div>
 
 ---
 
@@ -39,6 +37,13 @@ Pixego menggabungkan keduanya dan mengujinya secara terbuka:
 3. Ikuti langkah di halaman tersebut.
 
 > 💤 Aplikasi gratis di Streamlit bisa tertidur saat lama tidak dipakai. Kalau muncul tombol untuk membangunkannya, klik saja lalu tunggu beberapa saat.
+
+## Menjalankan Aplikasi Web Secara Lokal
+
+```bash
+pip install -r requirements.txt
+streamlit run streamlit_app.py
+```
 
 ### Contoh penggunaan
 
@@ -147,11 +152,11 @@ Mode acak membatasi ukuran gambar sekitar 8 megapiksel karena boros memori. Untu
 - RFC 5869. HMAC-based Extract-and-Expand Key Derivation Function (HKDF).
 - NIST SP 800-38D. Recommendation for Block Cipher Modes of Operation: Galois/Counter Mode (GCM) and GMAC.
 
-## 👩‍💻 Penulis
+## Pengembang
 
-**Nama :Kayla Verda Fawnia Heses**
-NIM  : A11.2024.15689
-Proyek mata kuliah **Kriptografi**
+Nama: Kayla Verda Fawnia Heses  
+NIM: A11.2024.15689  
+Mata Kuliah: Kriptografi
 
 ## 📄 Lisensi
 
